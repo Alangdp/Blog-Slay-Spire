@@ -2,8 +2,10 @@
 <html lang="pt-BR">
 
 <?php
-include '../utils/connection.php';
-include '../utils/getter.php';
+include __DIR__ . '/../utils/connection.php';
+include __DIR__ . '/../utils/getter.php';
+include __DIR__ . '/../utils/extras.php';
+
 ?>
 
 <head>
@@ -12,7 +14,7 @@ include '../utils/getter.php';
   <title>Administração do Blog</title>
   <meta name="author" content="David Grzyb">
   <meta name="description" content="Administração do Blog - Cadastro e Edição de Postagens">
-  <link rel="stylesheet" href="../output.css">
+  <link rel="stylesheet" href="/src/output.css">
 
   <style>
     @import url('https://fonts.googleapis.com/css?family=Karla:400,700&display=swap');
@@ -30,7 +32,7 @@ include '../utils/getter.php';
 <body class="bg-white font-family-karla">
 
   <?php
-  include '../includes/navbar.php'
+  include __DIR__ . '/../includes/navbar.php'
   ?>
 
   <header class="w-full container mx-auto">
@@ -48,7 +50,7 @@ include '../utils/getter.php';
 
     <div class="container mx-auto mt-8 p-4 border border-gray-200 rounded">
       <h1 class="text-2xl font-semibold mb-4">Nova Postagem</h1>
-      <form action="../usecases/criarPostagem.php" method="POST" enctype="multipart/form-data">
+      <form action="/src/usecases/criarPostagem.php" method="POST" enctype="multipart/form-data">
         <div class="mb-4">
           <label for="author" class="block text-sm font-semibold text-gray-600">Autor:</label>
           <input type="text" id="author" name="author" class="w-full px-3 py-2 border rounded-md text-sm outline-none" required>
@@ -102,10 +104,10 @@ include '../utils/getter.php';
             <?php
             $postagens = getPostagens();
             foreach ($postagens as $postagem) : ?>
-              <tr>
+              <tr class="h-20">
                 <td class="border px-4 py-2"><?php echo $postagem['titulo']; ?></td>
                 <td class="border px-4 py-2"><?php echo $postagem['categoria']; ?></td>
-                <td class="border px-4 py-2"><?php echo $postagem['conteudo']; ?></td>
+                <td class="border px-4 py-2 "><?php echo renderizarMarkdown($postagem['conteudo']);?></td>
                 <td class="border px-4 py-2 flex gap-4 items-center">
                   <button class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline" type="button">
                     Detalhes
@@ -113,7 +115,7 @@ include '../utils/getter.php';
                   <button class="bg-yellow-500 hover:bg-blue-400 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline" type="button" onclick="openEditModal(<?php echo $postagem['id']; ?>)">
                     Editar
                   </button>
-                  <form class="" action="../usecases/apagarPostagem.php" method="POST">
+                  <form class="" action="/src/usecases/apagarPostagem.php" method="POST">
                     <input type="text" name="id" hidden value="<?php echo $postagem['id']; ?>">
                     <button class="bg-red-500 hover:bg-red-400 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline" type="submit">
                       Excluir
@@ -130,7 +132,7 @@ include '../utils/getter.php';
     <div id="editModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
       <div class="bg-white p-6 rounded-lg w-96">
         <h2 class="text-xl font-semibold mb-4">Editar Postagem</h2>
-        <form action="../usecases/editarPostagem.php" method="POST" enctype="multipart/form-data">
+        <form action="/src/usecases/editarPostagem.php" method="POST" enctype="multipart/form-data">
           <input type="hidden" id="editId" name="id">
           <div class="mb-4">
             <label for="editAuthor" class="block text-sm font-semibold text-gray-600">Autor:</label>
@@ -187,7 +189,7 @@ include '../utils/getter.php';
     const chooseImageButton = document.getElementById('choose_image_btn');
     const imagePreview = document.getElementById('image_preview');
     const imageFilename = document.getElementById('image_filename');
-
+    
     chooseImageButton.addEventListener('click', function() {
       fileInput.click();
     });

@@ -1,6 +1,9 @@
 <?php
 
-function getPostagens() {
+include __DIR__ . '/connection.php';
+
+function getPostagens()
+{
   global $conn;
 
   $sql = "SELECT * FROM POSTAGENS";
@@ -17,21 +20,25 @@ function getPostagens() {
   return $postagens;
 }
 
-function getPostagemById($id) {
+function getPostagemById($id)
+{
   global $conn;
+  try {
 
-  $sql = "SELECT * FROM POSTAGENS WHERE id = $id";
-  $result = mysqli_query($conn, $sql);
+    $sql = "SELECT * FROM POSTAGENS WHERE id = $id";
+    $result = mysqli_query($conn, $sql);
 
-  $postagem = [];
+    $postagem = [];
 
-  if (mysqli_num_rows($result) > 0) {
-    while ($row = mysqli_fetch_assoc($result)) {
-      $postagem = $row;
+    if (mysqli_num_rows($result) > 0) {
+      while ($row = mysqli_fetch_assoc($result)) {
+        $postagem = $row;
+      }
+      return $postagem;
     }
-    return $postagem;
+
+    return null;
+  } catch (Throwable $th) {
+    return null;
   }
-
-  return null;
 }
-

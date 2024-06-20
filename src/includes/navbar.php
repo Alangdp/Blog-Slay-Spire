@@ -3,14 +3,13 @@
 
     <nav>
       <ul class="flex items-center justify-between font-bold text-sm text-white uppercase no-underline">
-        <li><a class="hover:text-gray-200 hover:underline px-4" href="#">Jogos</a></li>
-        <li><a class="hover:text-gray-200 hover:underline px-4" href="#">Análise</a></li>
+        <li><a class="hover:text-gray-200 hover:underline px-4" href="/">Jogos</a></li>
       </ul>
     </nav>
 
     <nav>
       <ul class="flex items-center justify-between font-bold text-sm text-white uppercase no-underline">
-        <li><a class="hover:text-gray-200 hover:underline px-4" href="#">Admin</a></li>
+        <li><a class="hover:text-gray-200 hover:underline px-4" href="/admin">Admin</a></li>
       </ul>
     </nav>
 
